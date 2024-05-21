@@ -1,3 +1,4 @@
+'use strict';
 
 const gallery = document.querySelector('.gallery');
 gallery.style.display = "flex";
@@ -5,6 +6,7 @@ gallery.style.flexWrap = "wrap";
 gallery.style.gap = "24px";
 gallery.style.justifyContent = "center";
 gallery.style.listStyleType = "none";
+
 const images = [
   {
     url: "https://images.pexels.com/photos/140134/pexels-photo-140134.jpeg?dpr=2&h=750&w=1260",
@@ -31,15 +33,22 @@ const images = [
     alt: "Lighthouse Coast Sea",
   }
 ];
-images.forEach (image => {
-  const liElement = document.createElement('li');
-  const imgElement = document.createElement('img');
-  imgElement.src = image.url;
-  imgElement.alt = image.alt;
-  imgElement.style.width = '360px'; 
-  imgElement.style.height = '300px';
-  liElement.append(imgElement);
-  gallery.append(liElement); 
-});
-console.log(images);
 
+let htmlString = '';
+images.forEach(image => {
+  htmlString += `
+    <li>
+      <img src="${image.url}" alt="${image.alt}" class="added-image" style="width: 320px; height: 240px;">
+    </li>
+  `;
+});
+gallery.innerHTML = htmlString;
+
+const addedImages = document.querySelectorAll('.added-image');
+addedImages.forEach(image => {
+  image.style.objectFit = "cover";
+  image.style.border = "5px solid #aaa";
+  image.style.borderRadius = "8px";
+});
+
+console.log(images);
